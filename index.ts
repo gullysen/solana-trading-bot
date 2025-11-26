@@ -14,10 +14,6 @@ import {
   RPC_WEBSOCKET_ENDPOINT,
   PRE_LOAD_EXISTING_MARKETS,
   LOG_LEVEL,
-  CHECK_IF_MUTABLE,
-  CHECK_IF_MINT_IS_RENOUNCED,
-  CHECK_IF_FREEZABLE,
-  CHECK_IF_BURNED,
   QUOTE_MINT,
   MAX_POOL_SIZE,
   MIN_POOL_SIZE,
@@ -82,7 +78,7 @@ function printDetails(wallet: Keypair, quoteToken: Token, bot: Bot) {
   logger.info('- Bot -');
 
   logger.info(
-    `Using ${TRANSACTION_EXECUTOR} executer: ${bot.isWarp || bot.isJito || (TRANSACTION_EXECUTOR === 'default' ? true : false)}`,
+    `Using ${TRANSACTION_EXECUTOR} executor: ${bot.isWarp || bot.isJito || (TRANSACTION_EXECUTOR === 'default' ? true : false)}`,
   );
   if (bot.isWarp || bot.isJito) {
     logger.info(`${TRANSACTION_EXECUTOR} fee: ${CUSTOM_FEE}`);
@@ -165,9 +161,9 @@ const runListener = async () => {
   const botConfig = <BotConfig>{
     wallet,
     quoteAta: getAssociatedTokenAddressSync(quoteToken.mint, wallet.publicKey),
-    checkRenounced: CHECK_IF_MINT_IS_RENOUNCED,
-    checkFreezable: CHECK_IF_FREEZABLE,
-    checkBurned: CHECK_IF_BURNED,
+    checkRenounced: false,
+    checkFreezable: false,
+    checkBurned: false,
     minPoolSize: new TokenAmount(quoteToken, MIN_POOL_SIZE, false),
     maxPoolSize: new TokenAmount(quoteToken, MAX_POOL_SIZE, false),
     quoteToken,
