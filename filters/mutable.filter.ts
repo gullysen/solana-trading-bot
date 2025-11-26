@@ -34,7 +34,7 @@ export class MutableFilter implements Filter {
       }
 
       const deserialize = this.metadataSerializer.deserialize(metadataAccount.data);
-      const mutable = !this.checkMutable || deserialize[0].isMutable;
+      const mutable = this.checkMutable && deserialize[0].isMutable;
       const hasSocials = !this.checkSocials || (await this.hasSocials(deserialize[0]));
       const ok = !mutable && hasSocials;
       const message: string[] = [];
